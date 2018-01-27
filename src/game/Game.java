@@ -3,13 +3,19 @@ package game;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import game.gfx.Assets;
 import game.gfx.GameCamera;
 import game.gui.GameWindow;
 import game.input.KeyManager;
 import game.input.MouseManager;
+import game.state.MainMenuState;
 import game.state.State;
+import game.state.TravelState;
 
 public class Game implements Runnable {
+
+	private MainMenuState mainMenuState;
+	private TravelState travelState;
 
 	private Handler handler;
 	private GameWindow gameWindow;
@@ -62,6 +68,14 @@ public class Game implements Runnable {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public MainMenuState getMainMenuState() {
+		return mainMenuState;
+	}
+
+	public TravelState getTravelState() {
+		return travelState;
 	}
 
 	public synchronized void start() {
@@ -127,10 +141,18 @@ public class Game implements Runnable {
 		keyManager = new KeyManager();
 		gameWindow.getFrame().addKeyListener(keyManager);
 		gameCamera = new GameCamera(handler, 0, 0);
+
+		Assets.init();
+		mainMenuState = new MainMenuState(handler);
+		travelState = new TravelState(handler);
+		setCurrentState(mainMenuState);
 	}
 
 	private void tick() {
-		currentState.tick();
+		if(null != currentState) {
+			currentState.tick();
+			keyManager.tick();
+		}
 	}
 
 	private void render() {
@@ -142,7 +164,8 @@ public class Game implements Runnable {
 		graphics = bufferStrategy.getDrawGraphics();
 		graphics.clearRect(0, 0, width, height);
 
-		currentState.render(graphics);
+		if(null != currentState)
+			currentState.render(graphics);
 
 		bufferStrategy.show();
 		graphics.dispose();

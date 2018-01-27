@@ -7,7 +7,7 @@ import game.entity.Entity;
 public abstract class Creature extends Entity {
 
 	public static final int DEFAULT_HEALTH = 10;
-	public static final float DEFAULT_SPEED = 3;
+	public static final float DEFAULT_SPEED = 2;
 	public static final int DEFAULT_CREATURE_WIDTH = GameConstants.TILE_WIDTH,
 			DEFAULT_CREATURE_HEIGHT = GameConstants.TILE_HEIGHT;
 
@@ -29,52 +29,19 @@ public abstract class Creature extends Entity {
 	}
 
 	public void moveX() {
-		if (xMove > 0) {
-			int tx = (int) (x + xMove + bounds.x + bounds.width) / GameConstants.TILE_WIDTH;
-			if (!collisionWithTile(tx, (int) (y + bounds.y) / GameConstants.TILE_HEIGHT)
-					&& !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / GameConstants.TILE_HEIGHT)) {
-				x += xMove;
-			} else {
-				x = tx * GameConstants.TILE_WIDTH - bounds.x - bounds.width - 1;
-			}
-		} else if (xMove < 0) {
-			int tx = (int) (x + xMove + bounds.x) / GameConstants.TILE_WIDTH;
-			if (!collisionWithTile(tx, (int) (y + bounds.y) / GameConstants.TILE_HEIGHT)
-					&& !collisionWithTile(tx, (int) (y + bounds.y + bounds.height) / GameConstants.TILE_HEIGHT)) {
-				x += xMove;
-			} else {
-				x = tx * GameConstants.TILE_WIDTH + GameConstants.TILE_WIDTH - bounds.x;
-			}
-		}
-
+		x += (xMove * getSpeed());
 		if (x < 0)
 			x = 0;
-		if (y < 0)
-			y = 0;
-		if (x > handler.getWorld().getWidth() * GameConstants.TILE_WIDTH - getWidth())
-			x = handler.getWorld().getWidth() * GameConstants.TILE_WIDTH - getWidth();
-		if (y > handler.getWorld().getHeight() * GameConstants.TILE_HEIGHT - getHeight())
-			y = handler.getWorld().getHeight() * GameConstants.TILE_HEIGHT - getHeight();
+		if (x > handler.getWidth() - getWidth())
+			x = handler.getWidth() - getWidth();
 	}
 
 	public void moveY() {
-		if (yMove < 0) {
-			int ty = (int) ((y + yMove + bounds.y) / GameConstants.TILE_HEIGHT);
-			if (!collisionWithTile((int) (x + bounds.x) / GameConstants.TILE_WIDTH, ty)
-					&& !collisionWithTile((int) (x + bounds.x + bounds.width) / GameConstants.TILE_WIDTH, ty)) {
-				y += yMove;
-			} else {
-				y = ty * GameConstants.TILE_HEIGHT + GameConstants.TILE_HEIGHT - bounds.y;
-			}
-		} else if (yMove > 0) {
-			int ty = (int) ((y + yMove + bounds.y + bounds.height) / GameConstants.TILE_HEIGHT);
-			if (!collisionWithTile((int) (x + bounds.x) / GameConstants.TILE_WIDTH, ty)
-					&& !collisionWithTile((int) (x + bounds.x + bounds.width) / GameConstants.TILE_WIDTH, ty)) {
-				y += yMove;
-			} else {
-				y = ty * GameConstants.TILE_HEIGHT - bounds.y - bounds.height - 1;
-			}
-		}
+		y += (yMove * getSpeed());
+		if (y < 0)
+			y = 0;
+		if (y > handler.getHeight() - getHeight())
+			y = handler.getHeight() - getHeight();
 	}
 
 	protected boolean collisionWithTile(int x, int y) {
