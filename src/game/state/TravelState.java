@@ -48,6 +48,7 @@ public class TravelState extends State {
         drawPlayer(g);
         drawMeteors(g);
         drawPlayerLasers(g);
+        drawLife(g);
     }
 
     private void drawBackground(Graphics g) {
@@ -57,6 +58,13 @@ public class TravelState extends State {
                         (j * Assets.backgroundBlack.getHeight()) - (Assets.backgroundBlack.getHeight() - (int)backPosY), handler.getGame().getGameWindow().getFrame());
             }
         }
+    }
+
+    private void drawLife(Graphics g) {
+        int pad = 40;
+        g.drawImage(Assets.playerLife1_blue, pad, pad, handler.getGame().getGameWindow().getFrame());
+        g.drawImage(Assets.numeralX, 60 + Assets.playerLife1_blue.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
+        g.drawImage(Assets.numeral3, 80 + Assets.playerLife1_blue.getWidth() + Assets.numeralX.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
     }
 
     private void drawPlayer(Graphics g) {
@@ -80,8 +88,8 @@ public class TravelState extends State {
     }
 
     private void firePlayerLaser() {
-        playerLasers.add(new PlayerLaser(handler, player.getX() + 1, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08));
-        playerLasers.add(new PlayerLaser(handler, player.getX() + player.getWidth() - 10, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08));
+        playerLasers.add(new PlayerLaser(handler, player.getX() + 1, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08, Assets.fire01));
+        playerLasers.add(new PlayerLaser(handler, player.getX() + player.getWidth() - 10, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08, Assets.fire01));
     }
 
     private void updatePlayerLasers() {

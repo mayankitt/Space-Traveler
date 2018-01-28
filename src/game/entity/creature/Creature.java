@@ -7,9 +7,7 @@ import game.entity.Entity;
 public abstract class Creature extends Entity {
 
 	public static final int DEFAULT_HEALTH = 10;
-	public static final float DEFAULT_SPEED = 2;
-	public static final int DEFAULT_CREATURE_WIDTH = GameConstants.TILE_WIDTH,
-			DEFAULT_CREATURE_HEIGHT = GameConstants.TILE_HEIGHT;
+	public static final float DEFAULT_SPEED = 3;
 
 	protected int health;
 	protected float speed;
