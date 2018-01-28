@@ -7,11 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c1a5d7b5-69f9-45be-acc1-1ae6c8728674" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/game/entity/Meteor.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/bin/production/Space-Traveler/game/state/TravelState.class" afterPath="$PROJECT_DIR$/bin/production/Space-Traveler/game/state/TravelState.class" />
-      <change beforePath="$PROJECT_DIR$/src/game/entity/PlayerLaser.java" afterPath="$PROJECT_DIR$/src/game/entity/PlayerLaser.java" />
-      <change beforePath="$PROJECT_DIR$/src/game/state/TravelState.java" afterPath="$PROJECT_DIR$/src/game/state/TravelState.java" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -436,7 +432,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517130512933</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added Meteors">
+      <created>1517132457826</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1517132457826</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -505,7 +508,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added assets and started with basic states" />
     <MESSAGE value="Added player lasers" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added player lasers" />
+    <MESSAGE value="Added Meteors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Meteors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
