@@ -1,15 +1,20 @@
 package game.state;
 
 import game.Handler;
+import game.entity.Meteor;
 import game.entity.PlayerLaser;
 import game.entity.creature.Player;
 import game.gfx.Assets;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class TravelState extends State {
+    private Random random;
     private ArrayList<PlayerLaser> playerLasers;
+    private ArrayList<Meteor> meteors;
     private Player player;
     private double backPosY;
     private boolean fireFlag;
@@ -19,25 +24,19 @@ public class TravelState extends State {
         player = new Player(handler, (handler.getWidth() - Assets.playerShip1_blue.getWidth()) / 2,
                 handler.getHeight() - Assets.playerShip1_blue.getHeight() - 10,
                 Assets.playerShip1_blue.getWidth(), Assets.playerShip1_blue.getHeight());
+
+        random = new Random();
         playerLasers = new ArrayList<>();
+        meteors = new ArrayList<>();
     }
 
     @Override
     public void tick() {
         updateBackgroundPosition();
-
-        if(handler.getKeyManager().space && !fireFlag) {
-            firePlayerLaser();
-            fireFlag = true;
-        }
-        if(!handler.getKeyManager().space) {
-            fireFlag = false;
-        }
-
-        for(PlayerLaser pl : playerLasers) {
-            pl.tick();
-        }
-
+        checkAndFirePlayerLaser();
+        checkAndSpawnMeteor();
+        updatePlayerLasers();
+        updateMeteors();
         player.tick();
     }
 
@@ -45,6 +44,7 @@ public class TravelState extends State {
     public void render(Graphics g) {
         drawBackground(g);
         drawPlayer(g);
+        drawMeteors(g);
         drawPlayerLasers(g);
     }
 
@@ -67,6 +67,12 @@ public class TravelState extends State {
         }
     }
 
+    private void drawMeteors(Graphics g) {
+        for(Meteor m : meteors) {
+            m.render(g);
+        }
+    }
+
     private void updateBackgroundPosition() {
         backPosY = (backPosY + 1d) % Assets.backgroundBlack.getHeight();
     }
@@ -74,5 +80,35 @@ public class TravelState extends State {
     private void firePlayerLaser() {
         playerLasers.add(new PlayerLaser(handler, player.getX() + 1, player.getY(), Assets.laserBlue01));
         playerLasers.add(new PlayerLaser(handler, player.getX() + player.getWidth() - 10, player.getY(), Assets.laserBlue01));
+    }
+
+    private void updatePlayerLasers() {
+        for(PlayerLaser pl : playerLasers) {
+            pl.tick();
+        }
+    }
+
+    private void checkAndFirePlayerLaser() {
+        if(handler.getKeyManager().space && !fireFlag) {
+            firePlayerLaser();
+            fireFlag = true;
+        }
+        if(!handler.getKeyManager().space) {
+            fireFlag = false;
+        }
+    }
+
+    private void checkAndSpawnMeteor() {
+        if(random.nextInt(40) == 10) {
+            BufferedImage meteorImage = Meteor.generateRandomMeteor(random);
+            int x = random.nextInt(handler.getWidth() - meteorImage.getWidth());
+            meteors.add(new Meteor(handler, x, -meteorImage.getHeight(), meteorImage));
+        }
+    }
+
+    private void updateMeteors() {
+        for(Meteor m : meteors) {
+            m.tick();
+        }
     }
 }
