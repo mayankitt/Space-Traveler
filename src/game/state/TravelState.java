@@ -5,6 +5,7 @@ import game.entity.Meteor;
 import game.entity.PlayerLaser;
 import game.entity.creature.Player;
 import game.gfx.Assets;
+import game.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -37,6 +38,7 @@ public class TravelState extends State {
         checkAndSpawnMeteor();
         updatePlayerLasers();
         updateMeteors();
+        checkCollisions();
         player.tick();
     }
 
@@ -78,8 +80,8 @@ public class TravelState extends State {
     }
 
     private void firePlayerLaser() {
-        playerLasers.add(new PlayerLaser(handler, player.getX() + 1, player.getY(), Assets.laserBlue01));
-        playerLasers.add(new PlayerLaser(handler, player.getX() + player.getWidth() - 10, player.getY(), Assets.laserBlue01));
+        playerLasers.add(new PlayerLaser(handler, player.getX() + 1, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08));
+        playerLasers.add(new PlayerLaser(handler, player.getX() + player.getWidth() - 10, player.getY(), Assets.laserBlue01, Assets.laserBlue09, Assets.laserBlue08));
     }
 
     private void updatePlayerLasers() {
@@ -99,7 +101,7 @@ public class TravelState extends State {
     }
 
     private void checkAndSpawnMeteor() {
-        if(random.nextInt(40) == 10) {
+        if(random.nextInt(100) == 10) {
             BufferedImage meteorImage = Meteor.generateRandomMeteor(random);
             int x = random.nextInt(handler.getWidth() - meteorImage.getWidth());
             meteors.add(new Meteor(handler, x, -meteorImage.getHeight(), meteorImage));
@@ -109,6 +111,16 @@ public class TravelState extends State {
     private void updateMeteors() {
         for(Meteor m : meteors) {
             m.tick();
+        }
+    }
+
+    private void checkCollisions() {
+        for(PlayerLaser pl : playerLasers) {
+            for(Meteor m : meteors) {
+                if(Utils.isColliding(pl, m)) {
+                    pl.blast();
+                }
+            }
         }
     }
 }

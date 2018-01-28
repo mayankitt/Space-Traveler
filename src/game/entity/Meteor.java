@@ -29,7 +29,7 @@ public class Meteor extends Entity {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(meteorImage, (int) getX(), (int) getY(), getWidth(), getHeight(), handler.getGame().getGameWindow().getFrame());
+        g.drawImage(meteorImage, (int) getX(), (int) getY(), handler.getGame().getGameWindow().getFrame());
     }
 
     public static BufferedImage generateRandomMeteor(Random r) {

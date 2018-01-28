@@ -1,5 +1,7 @@
 package game.utils;
 
+import game.entity.Entity;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -30,6 +32,10 @@ public class Utils {
 			e.printStackTrace();
 			return 0;
 		}
+	}
+
+	public static boolean isColliding(Entity a, Entity b) {
+		return (a.getBounds().intersects(b.getBounds()));
 	}
 
 }

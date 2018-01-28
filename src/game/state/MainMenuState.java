@@ -3,6 +3,7 @@ package game.state;
 import game.Handler;
 import game.gfx.Assets;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class MainMenuState extends State {
@@ -12,6 +13,10 @@ public class MainMenuState extends State {
     public MainMenuState(Handler handler) {
         super(handler);
         backPosY = 0;
+        JFrame frame = handler.getGame().getGameWindow().getFrame();
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Cursor c = tk.createCustomCursor(Assets.cursor, new Point(0, 0), "img");
+        frame.setCursor(c);
     }
 
     @Override

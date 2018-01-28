@@ -18,7 +18,7 @@ public abstract class Entity {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		bounds = new Rectangle(0, 0, width, height);
+		bounds = new Rectangle((int)x, (int)y, width, height);
 	}
 
 	public void setX(float x) {
@@ -51,6 +51,11 @@ public abstract class Entity {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public Rectangle getBounds() {
+		bounds = new Rectangle((int)x, (int)y, width, height);
+		return bounds;
 	}
 
 	public abstract void tick();
