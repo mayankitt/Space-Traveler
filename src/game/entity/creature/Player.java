@@ -12,6 +12,15 @@ public class Player extends Creature {
 
     @Override
     public void tick() {
+        checkPlayerMovement();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        g.drawImage(Assets.playerShip1_blue, (int)getX(), (int)getY(), handler.getGame().getGameWindow().getFrame());
+    }
+
+    private void checkPlayerMovement() {
         if(handler.getKeyManager().up && !handler.getKeyManager().down) {
             setyMove(-1.0f);
         }
@@ -31,10 +40,5 @@ public class Player extends Creature {
             setxMove(0f);
         }
         move();
-    }
-
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(Assets.playerShip1_blue, (int)getX(), (int)getY(), null);
     }
 }

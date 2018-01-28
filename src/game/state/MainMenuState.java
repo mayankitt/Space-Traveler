@@ -32,7 +32,7 @@ public class MainMenuState extends State {
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++) {
                 g.drawImage(Assets.backgroundBlack, i * Assets.backgroundBlack.getWidth(),
-                        (j * Assets.backgroundBlack.getHeight()) - (Assets.backgroundBlack.getHeight() - (int)backPosY), null);
+                        (j * Assets.backgroundBlack.getHeight()) - (Assets.backgroundBlack.getHeight() - (int)backPosY), handler.getGame().getGameWindow().getFrame());
             }
         }
     }
