@@ -29,6 +29,10 @@ public class PlayerLaser extends Entity {
         active = false;
     }
 
+    public boolean isVisible() {
+        return getY() > -getHeight();
+    }
+
     @Override
     public void tick() {
         if(active && getY() > -laserImage.getHeight())

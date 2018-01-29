@@ -93,8 +93,14 @@ public class TravelState extends State {
     }
 
     private void updatePlayerLasers() {
+        ArrayList<PlayerLaser> toRemove = new ArrayList<>();
         for(PlayerLaser pl : playerLasers) {
             pl.tick();
+            if(!pl.isVisible())
+                toRemove.add(pl);
+        }
+        for(PlayerLaser pl : toRemove) {
+            playerLasers.remove(pl);
         }
     }
 
@@ -117,16 +123,23 @@ public class TravelState extends State {
     }
 
     private void updateMeteors() {
+        ArrayList<Meteor> toRemove = new ArrayList<>();
         for(Meteor m : meteors) {
             m.tick();
+            if(!m.isVisible())
+                toRemove.add(m);
+        }
+        for(Meteor m : toRemove) {
+            meteors.remove(m);
         }
     }
 
     private void checkCollisions() {
         for(PlayerLaser pl : playerLasers) {
             for(Meteor m : meteors) {
-                if(Utils.isColliding(pl, m)) {
+                if(m.isAlive() && Utils.isColliding(pl, m)) {
                     pl.blast();
+                    m.damage(10);
                 }
             }
         }
