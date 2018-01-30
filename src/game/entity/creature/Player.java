@@ -8,6 +8,12 @@ import java.awt.*;
 public class Player extends Creature {
     public Player(Handler handler, int x, int y, int width, int height) {
         super(handler, x, y, width, height);
+        health = 500;
+    }
+
+    public void damage(int p) {
+        if(health > 0)
+            health -= p;
     }
 
     @Override

@@ -17,6 +17,7 @@ public class TravelState extends State {
     private ArrayList<PlayerLaser> playerLasers;
     private ArrayList<Meteor> meteors;
     private Player player;
+    private int score = 0;
     private double backPosY;
     private boolean fireFlag;
 
@@ -40,6 +41,9 @@ public class TravelState extends State {
         updateMeteors();
         checkCollisions();
         player.tick();
+        if(player.getHealth() <= 0) {
+            handler.getGame().setCurrentState(handler.getGame().getMainMenuState());
+        }
     }
 
     @Override
@@ -49,6 +53,7 @@ public class TravelState extends State {
         drawMeteors(g);
         drawPlayerLasers(g);
         drawLife(g);
+        drawScore(g);
     }
 
     private void drawBackground(Graphics g) {
@@ -80,6 +85,21 @@ public class TravelState extends State {
     private void drawMeteors(Graphics g) {
         for(Meteor m : meteors) {
             m.render(g);
+        }
+    }
+
+    private void drawScore(Graphics g) {
+        if(score == 0) {
+            g.drawImage(Assets.numeral0,handler.getWidth() - 40, 40, handler.getGame().getGameWindow().getFrame());
+        }
+        int t = score;
+        int w = 0;
+        while(t > 0) {
+            int r = t % 10;
+            t = t / 10;
+            BufferedImage img = Utils.getImageFor(r);
+            g.drawImage(img,handler.getWidth() - 40 - w, 40, handler.getGame().getGameWindow().getFrame());
+            w += img.getWidth() + 10;
         }
     }
 
@@ -130,6 +150,9 @@ public class TravelState extends State {
                 toRemove.add(m);
         }
         for(Meteor m : toRemove) {
+            if(!m.isAlive()) {
+                score += (m.getWidth() * m.getHeight() / 10);
+            }
             meteors.remove(m);
         }
     }
@@ -141,6 +164,12 @@ public class TravelState extends State {
                     pl.blast();
                     m.damage(10);
                 }
+            }
+        }
+        for(Meteor m : meteors) {
+            if(m.isAlive() && Utils.isColliding(player, m)) {
+                player.damage(m.getHealth());
+                m.damage(player.getHealth());
             }
         }
     }

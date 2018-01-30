@@ -34,6 +34,10 @@ public class Meteor extends Entity {
             health -= p;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
     public boolean isAlive() {
         return health > 0;
     }
