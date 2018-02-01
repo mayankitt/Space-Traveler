@@ -1,7 +1,8 @@
 package game;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
 import game.gfx.Assets;
 import game.gfx.GameCamera;
@@ -13,6 +14,9 @@ import game.state.State;
 import game.state.TravelState;
 
 public class Game implements Runnable {
+
+	private Font customFont;
+	private Font customFontThin;
 
 	private MainMenuState mainMenuState;
 	private TravelState travelState;
@@ -60,6 +64,14 @@ public class Game implements Runnable {
 	
 	public State getCurrentState() {
 		return currentState;
+	}
+
+	public Font getCustomFont() {
+		return customFont;
+	}
+
+	public Font getCustomFontThin() {
+		return customFontThin;
 	}
 
 	public int getWidth() {
@@ -131,6 +143,16 @@ public class Game implements Runnable {
 	}
 
 	private void init() {
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		try {
+			customFont = Font.createFont(Font.TRUETYPE_FONT, new File(Game.class.getResource("/font/kenvector_future.ttf").getFile())).deriveFont(16f);;
+			ge.registerFont(customFont);
+
+			customFontThin = Font.createFont(Font.TRUETYPE_FONT, new File(Game.class.getResource("/font/kenvector_future_thin.ttf").getFile())).deriveFont(16f);;
+			ge.registerFont(customFontThin);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		handler = new Handler(this);
 		gameWindow = new GameWindow(title, width, height);
 		gameWindow.show();
