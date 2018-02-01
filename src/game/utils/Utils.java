@@ -3,6 +3,7 @@ package game.utils;
 import game.entity.Entity;
 import game.gfx.Assets;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,6 +39,15 @@ public class Utils {
 
 	public static boolean isColliding(Entity a, Entity b) {
 		return (a.getBounds().intersects(b.getBounds()));
+	}
+	public static boolean isIn(Point mousePointer, int x, int y, int width, int height) {
+		boolean isIn = false;
+
+		int x2 = (int) mousePointer.getX(), y2 = (int) mousePointer.getY();
+		if(x2 >= x && x2 <= (x + width) && y2 >= y && y2 <= (y + height))
+			isIn = true;
+
+		return isIn;
 	}
 	public static BufferedImage getImageFor(int i) {
 		switch (i) {

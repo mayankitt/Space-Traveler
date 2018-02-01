@@ -157,10 +157,10 @@ public class Game implements Runnable {
 		gameWindow = new GameWindow(title, width, height);
 		gameWindow.show();
 		mouseManager = new MouseManager();
-		gameWindow.getFrame().addMouseListener(mouseManager);
-		gameWindow.getFrame().addMouseMotionListener(mouseManager);
 		keyManager = new KeyManager();
-		gameWindow.getFrame().addKeyListener(keyManager);
+		gameWindow.getCanvas().addKeyListener(keyManager);
+		gameWindow.getCanvas().addMouseListener(mouseManager);
+		gameWindow.getCanvas().addMouseMotionListener(mouseManager);
 		gameCamera = new GameCamera(handler, 0, 0);
 
 		Assets.init();
