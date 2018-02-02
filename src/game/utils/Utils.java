@@ -72,6 +72,6 @@ public class Utils {
 			case 9:
 				return Assets.numeral9;
 		}
-		return null;
+		return Assets.numeral0;
 	}
 }

@@ -54,6 +54,7 @@ public class TravelState extends State {
         drawPlayerLasers(g);
         drawLife(g);
         drawScore(g);
+        drawHealth(g);
     }
 
     private void drawBackground(Graphics g) {
@@ -70,6 +71,13 @@ public class TravelState extends State {
         g.drawImage(Assets.playerLife1_blue, pad, pad, handler.getGame().getGameWindow().getFrame());
         g.drawImage(Assets.numeralX, 60 + Assets.playerLife1_blue.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
         g.drawImage(Assets.numeral3, 80 + Assets.playerLife1_blue.getWidth() + Assets.numeralX.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
+    }
+
+    private void drawHealth(Graphics g) {
+        String health = String.valueOf(player.getHealth() / 5);
+        g.setFont(handler.getGame().getCustomFont());
+        g.setColor(Color.WHITE);
+        g.drawString(health, 40, 100);
     }
 
     private void drawPlayer(Graphics g) {

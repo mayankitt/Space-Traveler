@@ -4,19 +4,26 @@ import game.Handler;
 import game.gfx.Assets;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Meteor extends Entity {
+    private static int MAX_DEGREES = 360;
     private BufferedImage meteorImage;
-    BufferedImage img1, img2, img3, img4;
-    private int speed, health, dist;
+    private BufferedImage img1, img2, img3, img4;
+    private int speed, health, dist, rotationDirection;
+    private double rotationSpeed, rotation;
 
     public Meteor(Handler handler, float x, float y, BufferedImage meteorImage) {
         super(handler, x, y, meteorImage.getWidth(), meteorImage.getHeight());
         this.meteorImage = meteorImage;
         speed = 2;
         health = meteorImage.getHeight() * meteorImage.getWidth() / 10;
+        Random random = new Random();
+        rotation = random.nextInt(MAX_DEGREES);
+        rotationSpeed = random.nextDouble() + 1d;
+        rotationDirection = random.nextInt(10) > 8? -1 : 1;
         int w = meteorImage.getWidth() / 2;
         int h = meteorImage.getHeight() / 2;
         img1 = meteorImage.getSubimage(0, 0, w, h);
@@ -54,24 +61,38 @@ public class Meteor extends Entity {
             health = 0;
             dist++;
         }
+        rotation = (rotation + MAX_DEGREES + (rotationDirection * rotationSpeed)) % MAX_DEGREES;
     }
 
     @Override
     public void render(Graphics g) {
-        if(health > 0)
-            g.drawImage(meteorImage, (int) getX(), (int) getY(), handler.getGame().getGameWindow().getFrame());
+        AffineTransform at = new AffineTransform();
+        at.translate(getX(), getY());
+        at.rotate(Math.toRadians(rotation), meteorImage.getWidth() / 2, meteorImage.getHeight() / 2);
+        Graphics2D g2d = (Graphics2D) g;
+        if(health > 0) {
+            g2d.drawImage(meteorImage, at, handler.getGame().getGameWindow().getFrame());
+        }
         else if(dist < 20){
             int w = meteorImage.getWidth() / 2, h = meteorImage.getHeight() / 2;
-            g.drawImage(img1, (int) getX() - dist, (int) getY() - dist, handler.getGame().getGameWindow().getFrame());
-            g.drawImage(img2, (int) getX() + w + dist, (int) getY() - dist, handler.getGame().getGameWindow().getFrame());
-            g.drawImage(img3, (int) getX() - dist, (int) getY() + h + dist, handler.getGame().getGameWindow().getFrame());
-            g.drawImage(img4, (int) getX() + w + dist, (int) getY() + h + dist, handler.getGame().getGameWindow().getFrame());
+
+            at.translate(-dist, -dist);
+            g2d.drawImage(img1, at, handler.getGame().getGameWindow().getFrame());
+
+            at.translate(w + dist, -dist);
+            g2d.drawImage(img2, at, handler.getGame().getGameWindow().getFrame());
+
+            at.translate(-dist,h + dist);
+            g2d.drawImage(img3, at, handler.getGame().getGameWindow().getFrame());
+
+            at.translate( w + dist, 0);
+            g2d.drawImage(img4, at, handler.getGame().getGameWindow().getFrame());
         }
     }
 
     public static BufferedImage generateRandomMeteor(Random r) {
         int s = r.nextInt(20);
-        BufferedImage image = null;
+        BufferedImage image;
         switch (s) {
             case 0:
                 image = Assets.meteorBrown_big1;
