@@ -74,10 +74,18 @@ public class TravelState extends State {
     }
 
     private void drawHealth(Graphics g) {
-        String health = String.valueOf(player.getHealth() / 5);
-        g.setFont(handler.getGame().getCustomFont());
+        int health = player.getHealth() / 5;
+        Color healthColor;
+        if(health < 20)
+            healthColor = Color.RED;
+        else if(health < 50)
+            healthColor = Color.YELLOW;
+        else
+            healthColor = Color.GREEN;
         g.setColor(Color.WHITE);
-        g.drawString(health, 40, 100);
+        g.drawRoundRect(40, 100, 100, 10, 10, 10);
+        g.setColor(healthColor);
+        g.fillRoundRect(41, 101, health - 1, 8, 8, 8);
     }
 
     private void drawPlayer(Graphics g) {
