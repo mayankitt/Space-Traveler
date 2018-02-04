@@ -52,7 +52,7 @@ public class Assets {
 			wingRed_0, wingRed_1, wingRed_2, wingRed_3, wingRed_4, wingRed_5, wingRed_6, wingRed_7,
 			wingYellow_0, wingYellow_1, wingYellow_2, wingYellow_3, wingYellow_4, wingYellow_5, wingYellow_6, wingYellow_7;
 
-	public static BufferedImage backgroundBlack, backgroundBlue,backgroundDarkPurple,backgroundPurple;
+	public static BufferedImage backgroundBlack, backgroundBlue,backgroundDarkPurple,backgroundPurple, coverImage;
 
 	public static void init() {
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/images/sheet.png"));
@@ -354,5 +354,7 @@ public class Assets {
 		backgroundBlue = ImageLoader.loadImage("/images/blue.png");
 		backgroundDarkPurple = ImageLoader.loadImage("/images/darkPurple.png");
 		backgroundPurple = ImageLoader.loadImage("/images/purple.png");
+		coverImage = ImageLoader.loadImage("/images/coverimage.png");
+		cursor = ImageLoader.loadImage("/images/cursor.png");
 	}
 }

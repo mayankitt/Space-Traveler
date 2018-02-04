@@ -90,6 +90,10 @@ public class Game implements Runnable {
 		return travelState;
 	}
 
+	public void resetGame() {
+		travelState = new TravelState(handler);
+	}
+
 	public synchronized void start() {
 		if (running)
 			return;
@@ -148,7 +152,7 @@ public class Game implements Runnable {
 			customFont = Font.createFont(Font.TRUETYPE_FONT, new File(Game.class.getResource("/font/kenvector_future.ttf").getFile())).deriveFont(16f);;
 			ge.registerFont(customFont);
 
-			customFontThin = Font.createFont(Font.TRUETYPE_FONT, new File(Game.class.getResource("/font/kenvector_future_thin.ttf").getFile())).deriveFont(16f);;
+			customFontThin = Font.createFont(Font.TRUETYPE_FONT, new File(Game.class.getResource("/font/kenvector_future_thin.ttf").getFile())).deriveFont(36f);;
 			ge.registerFont(customFontThin);
 		} catch(Exception e) {
 			e.printStackTrace();

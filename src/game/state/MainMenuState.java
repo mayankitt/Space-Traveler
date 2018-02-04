@@ -61,6 +61,7 @@ public class MainMenuState extends State {
     @Override
     public void render(Graphics g) {
         drawBackground(g);
+        drawCover(g);
         drawMenu(g);
     }
 
@@ -71,6 +72,15 @@ public class MainMenuState extends State {
                         (j * Assets.backgroundBlack.getHeight()) - (Assets.backgroundBlack.getHeight() - (int)backPosY), handler.getGame().getGameWindow().getFrame());
             }
         }
+    }
+
+    private void drawCover(Graphics g) {
+        int coverX = 150, coverY = 100;
+        Color coverTextColor = new Color(100, 100, 127);
+        g.setFont(handler.getGame().getCustomFontThin());
+        g.setColor(coverTextColor);
+        g.drawImage(Assets.coverImage, coverX, coverY, handler.getGame().getGameWindow().getFrame());
+        g.drawString("Space Traveler", coverX + Assets.coverImage.getWidth(), coverY + 100);
     }
 
     private void drawMenu(Graphics g) {

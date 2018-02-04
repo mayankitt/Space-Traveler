@@ -17,7 +17,7 @@ public class TravelState extends State {
     private ArrayList<PlayerLaser> playerLasers;
     private ArrayList<Meteor> meteors;
     private Player player;
-    private int score = 0;
+    private int score;
     private double backPosY;
     private boolean fireFlag;
 
@@ -42,6 +42,7 @@ public class TravelState extends State {
         checkCollisions();
         player.tick();
         if(player.getHealth() <= 0) {
+            handler.getGame().resetGame();
             handler.getGame().setCurrentState(handler.getGame().getMainMenuState());
         }
     }
@@ -70,7 +71,7 @@ public class TravelState extends State {
         int pad = 40;
         g.drawImage(Assets.playerLife1_blue, pad, pad, handler.getGame().getGameWindow().getFrame());
         g.drawImage(Assets.numeralX, 60 + Assets.playerLife1_blue.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
-        g.drawImage(Assets.numeral3, 80 + Assets.playerLife1_blue.getWidth() + Assets.numeralX.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
+        g.drawImage(Assets.numeral1, 80 + Assets.playerLife1_blue.getWidth() + Assets.numeralX.getWidth(), pad, handler.getGame().getGameWindow().getFrame());
     }
 
     private void drawHealth(Graphics g) {
